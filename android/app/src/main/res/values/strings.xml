@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Fit-Lynk</string>
+    <string name="title_activity_main">Fit-Lynk Gym Management</string>
+    <string name="package_name">app.lovable.ba11fafa9d0146a9a3a8a5a872832141</string>
+    <string name="custom_url_scheme">app.lovable.ba11fafa9d0146a9a3a8a5a872832141</string>
+</resources>

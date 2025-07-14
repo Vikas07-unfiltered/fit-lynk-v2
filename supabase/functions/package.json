@@ -1,0 +1,16 @@
+{
+  "name": "send-expiry-notifications",
+  "version": "1.0.0",
+  "main": "send-expiry-notifications/index.node.ts",
+  "type": "module",
+  "scripts": {
+    "start": "node send-expiry-notifications/index.node.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.50.3",
+    "body-parser": "^2.2.0",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "node-fetch": "^3.3.2"
+  }
+}

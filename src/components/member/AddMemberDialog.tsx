@@ -14,7 +14,7 @@ import { NewMember } from '@/types/member';
 import { useMembershipPlans } from '@/hooks/useMembershipPlans';
 
 interface AddMemberDialogProps {
-  onAddMember: (member: NewMember) => Promise<boolean>;
+  onAddMember: (member: NewMember) => Promise<false | any>;
 }
 
 const AddMemberDialog = ({ onAddMember }: AddMemberDialogProps) => {
@@ -26,7 +26,6 @@ const AddMemberDialog = ({ onAddMember }: AddMemberDialogProps) => {
     name: '',
     phone: '',
     plan: '',
-    expiry_date: undefined as any, // Add expiry_date to NewMember type if not present
   });
 
   const { plans, loading: plansLoading } = useMembershipPlans();
@@ -36,11 +35,11 @@ const AddMemberDialog = ({ onAddMember }: AddMemberDialogProps) => {
       ...newMember,
       join_date: joinDate ? format(joinDate, 'yyyy-MM-dd') : undefined,
       first_payment_date: firstPaymentDate ? format(firstPaymentDate, 'yyyy-MM-dd') : undefined,
-      expiry_date: expiryDate ? format(expiryDate, 'yyyy-MM-dd') : undefined,
+      plan_expiry_date: expiryDate ? format(expiryDate, 'yyyy-MM-dd') : undefined,
     };
 
-    const success = await onAddMember(memberData);
-    if (success) {
+    const result = await onAddMember(memberData);
+    if (result) {
       setNewMember({ name: '', phone: '', plan: '' });
       setJoinDate(undefined);
       setFirstPaymentDate(undefined);

@@ -4,6 +4,7 @@ import { Search } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { usePayments } from '@/hooks/usePayments';
+import { useMembers } from '@/hooks/useMembers';
 import { Payment } from '@/types/payment';
 import PaymentStats from './payment/PaymentStats';
 import PaymentDialog from './payment/PaymentDialog';
@@ -11,9 +12,19 @@ import PaymentList from './payment/PaymentList';
 
 const PaymentTracking = () => {
   const { payments, loading, addPayment } = usePayments();
+  const { fetchMembers } = useMembers();
   const [searchTerm, setSearchTerm] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const isMobile = useIsMobile();
+
+  const handleAddPayment = async (paymentData: any) => {
+    const success = await addPayment(paymentData);
+    if (success) {
+      // Refresh member data after successful payment to update statuses
+      await fetchMembers();
+    }
+    return success;
+  };
 
   const filteredPayments = payments.filter(payment =>
     payment.member_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -45,7 +56,7 @@ const PaymentTracking = () => {
         <PaymentDialog
           isOpen={isAddDialogOpen}
           onOpenChange={setIsAddDialogOpen}
-          onAddPayment={addPayment}
+          onAddPayment={handleAddPayment}
         />
       </div>
 

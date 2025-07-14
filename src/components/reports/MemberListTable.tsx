@@ -49,7 +49,20 @@ const MemberListTable = ({ members }: MemberListTableProps) => {
                 <TableCell>
                   {(() => {
                     const today = new Date();
-                    today.setHours(0,0,0,0);
+                    today.setHours(0, 0, 0, 0);
+                    
+                    // Use the database status field if plan_expiry_date is not available
+                    if (!member.plan_expiry_date) {
+                      const statusLabel = member.status === 'active' ? 'Active' : 'Inactive';
+                      const badgeClass = member.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700';
+                      const badgeVariant = member.status === 'active' ? 'default' : 'secondary';
+                      return (
+                        <Badge variant={badgeVariant} className={badgeClass}>
+                          {statusLabel}
+                        </Badge>
+                      );
+                    }
+                    
                     const expiry = parseDate(member.plan_expiry_date);
                     const isExpired = expiry ? expiry.getTime() < today.getTime() : false;
                     const statusLabel = isExpired ? 'Inactive' : 'Active';

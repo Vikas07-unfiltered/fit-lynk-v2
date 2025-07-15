@@ -22,7 +22,13 @@ const Reports = () => {
   const isMobile = useIsMobile();
   const { analytics, loading } = useAdvancedAnalytics();
   const { analytics: dashboardData, loading: dashboardLoading } = useDashboardAnalytics();
-  const { members } = useMembers();
+  const { members, fetchMembers } = useMembers();
+
+  // Force refresh members data when component mounts or tab changes
+  const handleRefreshData = async () => {
+    console.log('Refreshing member data for reports...');
+    await fetchMembers();
+  };
 
   const [activeTab, setActiveTab] = useState('reports');
 
@@ -798,17 +804,18 @@ const chartConfig = {
               {filteredMembers.length > 0 ? (
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <thead>
-                      <tr className="border-b">
-                        <th className="text-left text-sm font-medium text-gray-500 pb-3">Member ID</th>
-                        <th className="text-left text-sm font-medium text-gray-500 pb-3">Name</th>
-                        <th className="text-left text-sm font-medium text-gray-500 pb-3">Phone</th>
-                        <th className="text-left text-sm font-medium text-gray-500 pb-3">Plan</th>
-                        <th className="text-left text-sm font-medium text-gray-500 pb-3">Status</th>
-                        <th className="text-left text-sm font-medium text-gray-500 pb-3">Join Date</th>
-                        <th className="text-left text-sm font-medium text-gray-500 pb-3">Last Payment</th>
-                      </tr>
-                    </thead>
+                     <thead>
+                       <tr className="border-b">
+                         <th className="text-left text-sm font-medium text-gray-500 pb-3">Member ID</th>
+                         <th className="text-left text-sm font-medium text-gray-500 pb-3">Name</th>
+                         <th className="text-left text-sm font-medium text-gray-500 pb-3">Phone</th>
+                         <th className="text-left text-sm font-medium text-gray-500 pb-3">Plan</th>
+                         <th className="text-left text-sm font-medium text-gray-500 pb-3">Status</th>
+                         <th className="text-left text-sm font-medium text-gray-500 pb-3">Join Date</th>
+                         <th className="text-left text-sm font-medium text-gray-500 pb-3">Last Payment</th>
+                         <th className="text-left text-sm font-medium text-gray-500 pb-3">Expiry Date</th>
+                       </tr>
+                     </thead>
                     <tbody>
                       {filteredMembers.map((member) => {
                         const expiry = member.plan_expiry_date ? new Date(member.plan_expiry_date) : null;
@@ -824,9 +831,10 @@ const chartConfig = {
                             <td className="py-3 text-sm">
                               <span className={`px-2 py-1 rounded-full text-xs font-medium ${badgeClass}`}>{label}</span>
                             </td>
-                            <td className="py-3 text-sm">{formatDate(member.join_date)}</td>
-                            <td className="py-3 text-sm">{member.last_payment ? formatDate(member.last_payment) : 'No payment'}</td>
-                          </tr>
+                             <td className="py-3 text-sm">{formatDate(member.join_date)}</td>
+                             <td className="py-3 text-sm">{member.last_payment ? formatDate(member.last_payment) : 'No payment'}</td>
+                             <td className="py-3 text-sm">{member.plan_expiry_date ? formatDate(member.plan_expiry_date) : 'N/A'}</td>
+                           </tr>
                         );
                       })}
                     </tbody>

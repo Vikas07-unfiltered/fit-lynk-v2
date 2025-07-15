@@ -20,8 +20,15 @@ const PaymentTracking = () => {
   const handleAddPayment = async (paymentData: any) => {
     const success = await addPayment(paymentData);
     if (success) {
-      // Refresh member data after successful payment to update statuses
+      // Refresh member data after successful payment to update statuses and expiry dates
+      console.log('Payment successful, refreshing member data...');
       await fetchMembers();
+      
+      // Small delay to ensure database trigger has processed
+      setTimeout(async () => {
+        await fetchMembers();
+        console.log('Member data refreshed after payment');
+      }, 1000);
     }
     return success;
   };

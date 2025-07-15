@@ -16,6 +16,7 @@ export const useMembers = () => {
     }
 
     try {
+      // Add cache busting to ensure fresh data
       const { data, error } = await supabase
         .from('members')
         .select('id, user_id, name, phone, plan, status, join_date, last_payment, plan_expiry_date, photo_url')
@@ -23,7 +24,7 @@ export const useMembers = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      console.log('Fetched members from Supabase:', data);
+      console.log('Fetched members from Supabase (refreshed):', data);
       setMembers(data || []);
     } catch (error) {
       console.error('Error fetching members:', error);

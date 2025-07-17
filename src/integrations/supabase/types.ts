@@ -109,6 +109,33 @@ export type Database = {
         }
         Relationships: []
       }
+      member_expiry_dates: {
+        Row: {
+          created_at: string
+          expiry_date: string
+          gym_id: string
+          id: string
+          member_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          expiry_date: string
+          gym_id: string
+          id?: string
+          member_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          expiry_date?: string
+          gym_id?: string
+          id?: string
+          member_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       members: {
         Row: {
           created_at: string

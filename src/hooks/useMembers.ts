@@ -16,14 +16,35 @@ export const useMembers = () => {
     }
 
     try {
-      // Add cache busting to ensure fresh data
-      const { data, error } = await supabase
+      // Fetch members with expiry dates from the new table
+      const { data: membersData, error: membersError } = await supabase
         .from('members')
-        .select('id, user_id, name, phone, plan, status, join_date, last_payment, plan_expiry_date, photo_url')
+        .select('id, user_id, name, phone, plan, status, join_date, last_payment, photo_url')
         .eq('gym_id', gym.id)
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (membersError) throw membersError;
+
+      // Fetch expiry dates from the new table
+      const { data: expiryData, error: expiryError } = await supabase
+        .from('member_expiry_dates')
+        .select('member_id, expiry_date')
+        .eq('gym_id', gym.id);
+
+      if (expiryError) throw expiryError;
+
+      // Combine members with their expiry dates
+      const membersWithExpiry = (membersData || []).map(member => {
+        const expiryRecord = (expiryData || []).find(ed => ed.member_id === member.id);
+        return {
+          ...member,
+          plan_expiry_date: expiryRecord?.expiry_date || null
+        };
+      });
+
+      const data = membersWithExpiry;
+
+      // Error handling is now done above
       console.log('Fetched members from Supabase (refreshed):', data);
       setMembers(data || []);
     } catch (error) {

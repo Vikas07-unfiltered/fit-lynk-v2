@@ -15,15 +15,15 @@ const DashboardOverview = () => {
 
   if (loading) {
     return (
-      <div className={`grid grid-cols-1 ${isMobile ? 'sm:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-4'} gap-4 mb-8`}>
+      <div className={`grid grid-cols-2 ${isMobile ? 'gap-2' : 'md:grid-cols-2 lg:grid-cols-4 gap-4'} mb-8`}>
         {[...Array(4)].map((_, i) => (
           <Card key={i} className="animate-pulse">
-            <CardHeader className="pb-2">
-              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+            <CardHeader className={isMobile ? 'pb-1 px-3 pt-3' : 'pb-2'}>
+              <div className={`${isMobile ? 'h-3' : 'h-4'} bg-gray-200 rounded w-3/4`}></div>
             </CardHeader>
-            <CardContent>
-              <div className="h-8 bg-gray-200 rounded w-1/2 mb-2"></div>
-              <div className="h-3 bg-gray-200 rounded w-full"></div>
+            <CardContent className={isMobile ? 'px-3 pb-3' : ''}>
+              <div className={`${isMobile ? 'h-6' : 'h-8'} bg-gray-200 rounded w-1/2 mb-2`}></div>
+              <div className={`${isMobile ? 'h-2' : 'h-3'} bg-gray-200 rounded w-full`}></div>
             </CardContent>
           </Card>
         ))}
@@ -94,7 +94,7 @@ const DashboardOverview = () => {
         </p>
       </div>
 
-      <div className={`grid grid-cols-1 ${isMobile ? 'sm:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-4'} gap-4`}>
+      <div className={`grid grid-cols-2 ${isMobile ? 'gap-2' : 'md:grid-cols-2 lg:grid-cols-4 gap-4'}`}>
         <StatCard
           title="Total Members"
           value={analytics.totalMembers}
@@ -126,7 +126,7 @@ const DashboardOverview = () => {
         />
       </div>
 
-      <div className={`grid grid-cols-1 ${isMobile ? 'gap-4' : 'lg:grid-cols-3 gap-4'}`}>
+      <div className={`grid grid-cols-1 ${isMobile ? 'gap-3' : 'lg:grid-cols-3 gap-4'}`}>
         <Card>
           <CardHeader>
             <CardTitle className={isMobile ? 'text-base' : 'text-lg'}>Quick Stats</CardTitle>

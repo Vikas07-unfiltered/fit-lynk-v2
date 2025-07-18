@@ -147,45 +147,45 @@ const MemberCard = ({ member, onShowQR }: MemberCardProps) => {
         </div>
       </CardHeader>
       <CardContent className={`space-y-${isMobile ? '2' : '3'}`}>
-        <div className={`flex justify-between ${isMobile ? 'text-xs' : 'text-sm'}`}>
+        <div className={`flex justify-between ${isMobile ? 'text-[10px]' : 'text-sm'}`}>
           <span className="font-medium">Plan:</span>
           <span className="text-emerald-600 font-semibold truncate ml-2">{member.plan}</span>
         </div>
-        <div className={`flex justify-between ${isMobile ? 'text-xs' : 'text-sm'}`}>
+        <div className={`flex justify-between ${isMobile ? 'text-[10px]' : 'text-sm'}`}>
           <span className="font-medium">Phone:</span>
           <span className="truncate ml-2">{member.phone}</span>
         </div>
-        <div className={`flex justify-between ${isMobile ? 'text-xs' : 'text-sm'}`}>
+        <div className={`flex justify-between ${isMobile ? 'text-[10px]' : 'text-sm'}`}>
           <span className="font-medium">Joined:</span>
           <span className="truncate ml-2">{formatDate(member.join_date)}</span>
         </div>
-        <div className={`flex justify-between ${isMobile ? 'text-xs' : 'text-sm'}`}>
+        <div className={`flex justify-between ${isMobile ? 'text-[10px]' : 'text-sm'}`}>
           <span className="font-medium">Last Payment:</span>
           <span className="truncate ml-2">{member.last_payment ? formatDate(member.last_payment) : 'No payment'}</span>
         </div>
-        <div className={`flex gap-2 pt-${isMobile ? '1' : '2'}`}>
+        <div className={`flex gap-1.5 pt-${isMobile ? '1.5' : '2'}`}>
           <Button
-            size={isMobile ? "sm" : "sm"}
+            size="sm"
             variant="outline"
             onClick={handleEdit}
-            className={`border-blue-500 text-blue-600 hover:bg-blue-50 ${isMobile ? 'h-9 px-3' : 'px-3'}`}
+            className={`border-blue-500 text-blue-600 hover:bg-blue-50 ${isMobile ? 'h-7 px-2' : 'px-3'} flex-1`}
           >
             <Pencil className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
           </Button>
           <Button
-            size={isMobile ? 'sm' : 'sm'}
+            size="sm"
             variant="outline"
             onClick={handleCollectPayment}
             disabled={isPaying}
-            className={`border-green-500 text-green-600 hover:bg-green-50 ${isMobile ? 'h-9 px-3' : 'px-3'}`}
+            className={`border-green-500 text-green-600 hover:bg-green-50 ${isMobile ? 'h-7 px-2' : 'px-3'} flex-1`}
           >
             <IndianRupee className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
           </Button>
           <Button
-            size={isMobile ? "sm" : "sm"}
+            size="sm"
             variant="outline"
             onClick={handleDelete}
-            className={`border-red-500 text-red-600 hover:bg-red-50 ${isMobile ? 'h-9 px-3' : 'px-3'}`}
+            className={`border-red-500 text-red-600 hover:bg-red-50 ${isMobile ? 'h-7 px-2' : 'px-3'} flex-1`}
           >
             <Trash className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
           </Button>
@@ -193,35 +193,45 @@ const MemberCard = ({ member, onShowQR }: MemberCardProps) => {
 
         {/* Edit Dialog */}
         {isEditing && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-            <div className="bg-white rounded-lg p-6 w-full max-w-md mx-auto shadow-lg">
-              <h3 className="text-lg font-semibold mb-4">Edit Member</h3>
-              <div className="space-y-3">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 p-4">
+            <div className={`bg-white rounded-lg w-full shadow-lg ${isMobile ? 'max-w-sm p-4' : 'max-w-md p-6'}`}>
+              <h3 className={`${isMobile ? 'text-base' : 'text-lg'} font-semibold mb-4`}>Edit Member</h3>
+              <div className={`space-y-${isMobile ? '2' : '3'}`}>
                 <input
-                  className="w-full border rounded px-3 py-2"
+                  className={`w-full border rounded ${isMobile ? 'px-2 py-1.5 text-sm' : 'px-3 py-2'}`}
                   name="name"
                   value={editFields.name}
                   onChange={handleEditChange}
                   placeholder="Name"
                 />
                 <input
-                  className="w-full border rounded px-3 py-2"
+                  className={`w-full border rounded ${isMobile ? 'px-2 py-1.5 text-sm' : 'px-3 py-2'}`}
                   name="phone"
                   value={editFields.phone}
                   onChange={handleEditChange}
                   placeholder="Phone"
                 />
                 <input
-                  className="w-full border rounded px-3 py-2"
+                  className={`w-full border rounded ${isMobile ? 'px-2 py-1.5 text-sm' : 'px-3 py-2'}`}
                   name="plan"
                   value={editFields.plan}
                   onChange={handleEditChange}
                   placeholder="Plan"
                 />
               </div>
-              <div className="flex justify-end gap-2 mt-6">
-                <button onClick={handleEditCancel} className="px-4 py-2 rounded bg-gray-200">Cancel</button>
-                <button onClick={handleEditSave} className="px-4 py-2 rounded bg-blue-600 text-white">Save</button>
+              <div className={`flex justify-end gap-2 mt-${isMobile ? '4' : '6'}`}>
+                <button 
+                  onClick={handleEditCancel} 
+                  className={`${isMobile ? 'px-3 py-1.5 text-sm' : 'px-4 py-2'} rounded bg-gray-200`}
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={handleEditSave} 
+                  className={`${isMobile ? 'px-3 py-1.5 text-sm' : 'px-4 py-2'} rounded bg-blue-600 text-white`}
+                >
+                  Save
+                </button>
               </div>
             </div>
           </div>

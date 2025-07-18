@@ -23,33 +23,33 @@ const GymHeader = () => {
 
   if (isMobile) {
     return (
-      <div className="bg-white border-b border-gray-200 px-4 py-3">
+      <div className="bg-white border-b border-gray-200 px-3 py-2.5">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3 flex-1 min-w-0">
-            <div className="w-10 h-10 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
-              <Building className="w-5 h-5 text-white" />
+          <div className="flex items-center space-x-2.5 flex-1 min-w-0">
+            <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Building className="w-4 h-4 text-white" />
             </div>
             <div className="min-w-0 flex-1">
-              <h2 className="font-semibold text-gray-900 truncate">{gym.name}</h2>
-              <p className="text-sm text-gray-600 truncate">{user.email}</p>
+              <h2 className="text-sm font-semibold text-gray-900 truncate">{gym.name}</h2>
+              <p className="text-xs text-gray-600 truncate">{user.email}</p>
             </div>
-            <Badge variant="secondary" className="bg-emerald-100 text-emerald-800 flex-shrink-0">
+            <Badge variant="secondary" className="bg-emerald-100 text-emerald-800 flex-shrink-0 text-xs px-2 py-0.5">
               Owner
             </Badge>
           </div>
           
           <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="ml-2">
+              <Button variant="outline" size="sm" className="ml-2 h-8 w-8 p-0">
                 <Menu className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem onClick={() => navigate('/settings')}>
+            <DropdownMenuContent align="end" className="w-44">
+              <DropdownMenuItem onClick={() => navigate('/settings')} className="text-sm">
                 <Settings className="w-4 h-4 mr-2" />
                 Settings
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={signOut}>
+              <DropdownMenuItem onClick={signOut} className="text-sm">
                 <LogOut className="w-4 h-4 mr-2" />
                 Sign Out
               </DropdownMenuItem>

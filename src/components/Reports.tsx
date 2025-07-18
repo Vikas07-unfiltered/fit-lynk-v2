@@ -351,58 +351,98 @@ const chartConfig = {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className={`space-y-${isMobile ? '4' : '6'} animate-fade-in`}>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+      <div className={`flex flex-col ${isMobile ? 'gap-3' : 'sm:flex-row gap-4'} items-start sm:items-center justify-between`}>
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Reports & Analytics</h2>
-          <p className="text-gray-600">Comprehensive insights and performance tracking</p>
+          <h2 className={`${isMobile ? 'text-lg' : 'text-2xl'} font-bold text-gray-900`}>
+            {isMobile ? 'Reports' : 'Reports & Analytics'}
+          </h2>
+          <p className={`text-gray-600 ${isMobile ? 'text-xs' : ''}`}>
+            {isMobile ? 'Insights and performance' : 'Comprehensive insights and performance tracking'}
+          </p>
         </div>
         
-        <div className="flex gap-2 w-full sm:w-auto">
-        
-          {/* From date */}
-          <Input type="date" className="w-36" value={fromDate ? fromDate.toISOString().substring(0,10) : ''} onChange={(e) => setFromDate(e.target.value ? new Date(e.target.value) : null)} />
-
-          {/* To date */}
-          <Input type="date" className="w-36" value={toDate ? toDate.toISOString().substring(0,10) : ''} onChange={(e) => setToDate(e.target.value ? new Date(e.target.value) : null)} />
-
-          <Button variant="outline" onClick={handleExportPDFClick} className="hover-scale">
-            <Download className="w-4 h-4 mr-2" />
-            PDF
-          </Button>
-          <Button variant="outline" onClick={handleExportExcelClick} className="hover-scale">
-            <Download className="w-4 h-4 mr-2" />
-            Excel
-          </Button>
+        <div className={`flex ${isMobile ? 'flex-col w-full gap-2' : 'gap-2 w-full sm:w-auto'}`}>
+          {/* Date Range Inputs - Mobile Layout */}
+          <div className={`flex ${isMobile ? 'gap-1.5' : 'gap-2'}`}>
+            <Input 
+              type="date" 
+              className={`${isMobile ? 'w-full text-xs h-8' : 'w-36'}`} 
+              value={fromDate ? fromDate.toISOString().substring(0,10) : ''} 
+              onChange={(e) => setFromDate(e.target.value ? new Date(e.target.value) : null)} 
+              placeholder="From"
+            />
+            <Input 
+              type="date" 
+              className={`${isMobile ? 'w-full text-xs h-8' : 'w-36'}`} 
+              value={toDate ? toDate.toISOString().substring(0,10) : ''} 
+              onChange={(e) => setToDate(e.target.value ? new Date(e.target.value) : null)} 
+              placeholder="To"
+            />
+          </div>
+          
+          {/* Export Buttons */}
+          <div className={`flex ${isMobile ? 'gap-1.5' : 'gap-2'}`}>
+            <Button 
+              variant="outline" 
+              onClick={handleExportPDFClick} 
+              className={`hover-scale ${isMobile ? 'flex-1 h-8 text-xs px-2' : ''}`}
+            >
+              <Download className={`${isMobile ? 'w-3 h-3 mr-1' : 'w-4 h-4 mr-2'}`} />
+              PDF
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={handleExportExcelClick} 
+              className={`hover-scale ${isMobile ? 'flex-1 h-8 text-xs px-2' : ''}`}
+            >
+              <Download className={`${isMobile ? 'w-3 h-3 mr-1' : 'w-4 h-4 mr-2'}`} />
+              Excel
+            </Button>
+          </div>
         </div>
       </div>
 
       {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="reports" className="flex items-center gap-2">
-            <FileText className="w-4 h-4" />
-            Reports
-          </TabsTrigger>
-          <TabsTrigger value="analytics" className="flex items-center gap-2">
-            <BarChart3 className="w-4 h-4" />
-            Analytics
-          </TabsTrigger>
-          <TabsTrigger value="members" className="flex items-center gap-2">
-            <Users className="w-4 h-4" />
-            Members
-          </TabsTrigger>
-          <TabsTrigger value="expired" className="flex items-center gap-2">
-            <Clock className="w-4 h-4" />
-            Expired
-          </TabsTrigger>
-        </TabsList>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className={`space-y-${isMobile ? '4' : '6'}`}>
+        <div className={`w-full ${isMobile ? 'overflow-x-auto pb-1' : ''}`}>
+          <TabsList className={`${isMobile ? 'flex w-max min-w-full gap-0.5 p-1 bg-muted/50' : 'grid w-full grid-cols-4'}`}>
+            <TabsTrigger 
+              value="reports" 
+              className={`flex items-center gap-${isMobile ? '1' : '2'} ${isMobile ? 'min-w-[80px] py-2 px-3 text-xs' : ''}`}
+            >
+              <FileText className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
+              {isMobile ? 'Reports' : 'Reports'}
+            </TabsTrigger>
+            <TabsTrigger 
+              value="analytics" 
+              className={`flex items-center gap-${isMobile ? '1' : '2'} ${isMobile ? 'min-w-[80px] py-2 px-3 text-xs' : ''}`}
+            >
+              <BarChart3 className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
+              {isMobile ? 'Analytics' : 'Analytics'}
+            </TabsTrigger>
+            <TabsTrigger 
+              value="members" 
+              className={`flex items-center gap-${isMobile ? '1' : '2'} ${isMobile ? 'min-w-[80px] py-2 px-3 text-xs' : ''}`}
+            >
+              <Users className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
+              {isMobile ? 'Members' : 'Members'}
+            </TabsTrigger>
+            <TabsTrigger 
+              value="expired" 
+              className={`flex items-center gap-${isMobile ? '1' : '2'} ${isMobile ? 'min-w-[80px] py-2 px-3 text-xs' : ''}`}
+            >
+              <Clock className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
+              {isMobile ? 'Expired' : 'Expired'}
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
         {/* Reports Tab */}
-        <TabsContent value="reports" className="space-y-6">
+        <TabsContent value="reports" className={`space-y-${isMobile ? '4' : '6'}`}>
           {/* Basic Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className={`grid ${isMobile ? 'grid-cols-2 gap-2' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'}`}>
             <StatCard
               title="Total Revenue"
               value={`₹${weeklyData.revenue.toLocaleString()}`}
@@ -434,43 +474,47 @@ const chartConfig = {
           </div>
 
           {/* Reports Summary */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className={`grid grid-cols-1 ${isMobile ? 'gap-3' : 'lg:grid-cols-2 gap-6'}`}>
             <Card className="animate-scale-in">
-              <CardHeader>
-                <CardTitle>Monthly Revenue Summary</CardTitle>
+              <CardHeader className={isMobile ? 'pb-2 px-3 pt-3' : ''}>
+                <CardTitle className={isMobile ? 'text-base' : ''}>
+                  {isMobile ? 'Revenue' : 'Monthly Revenue Summary'}
+                </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                  <span className="text-sm font-medium">This Month</span>
-                  <span className="text-lg font-bold text-green-600">₹{currentMonthRevenue.toLocaleString()}</span>
+              <CardContent className={`space-y-${isMobile ? '2' : '4'} ${isMobile ? 'px-3 pb-3' : ''}`}>
+                <div className={`flex justify-between items-center ${isMobile ? 'p-2' : 'p-4'} bg-gray-50 rounded-lg`}>
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>This Month</span>
+                  <span className={`${isMobile ? 'text-sm' : 'text-lg'} font-bold text-green-600`}>₹{currentMonthRevenue.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                  <span className="text-sm font-medium">Last Month</span>
-                  <span className="text-lg font-bold">₹{lastMonthRevenue.toLocaleString()}</span>
+                <div className={`flex justify-between items-center ${isMobile ? 'p-2' : 'p-4'} bg-gray-50 rounded-lg`}>
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>Last Month</span>
+                  <span className={`${isMobile ? 'text-sm' : 'text-lg'} font-bold`}>₹{lastMonthRevenue.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                  <span className="text-sm font-medium">Year to Date</span>
-                  <span className="text-lg font-bold">₹{yearToDateRevenue.toLocaleString()}</span>
+                <div className={`flex justify-between items-center ${isMobile ? 'p-2' : 'p-4'} bg-gray-50 rounded-lg`}>
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>Year to Date</span>
+                  <span className={`${isMobile ? 'text-sm' : 'text-lg'} font-bold`}>₹{yearToDateRevenue.toLocaleString()}</span>
                 </div>
               </CardContent>
             </Card>
 
             <Card className="animate-scale-in">
-              <CardHeader>
-                <CardTitle>Membership Overview</CardTitle>
+              <CardHeader className={isMobile ? 'pb-2 px-3 pt-3' : ''}>
+                <CardTitle className={isMobile ? 'text-base' : ''}>
+                  {isMobile ? 'Members' : 'Membership Overview'}
+                </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                  <span className="text-sm font-medium">New Members</span>
-                  <span className="text-lg font-bold text-blue-600">{newMembersThisMonth}</span>
+              <CardContent className={`space-y-${isMobile ? '2' : '4'} ${isMobile ? 'px-3 pb-3' : ''}`}>
+                <div className={`flex justify-between items-center ${isMobile ? 'p-2' : 'p-4'} bg-gray-50 rounded-lg`}>
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>New Members</span>
+                  <span className={`${isMobile ? 'text-sm' : 'text-lg'} font-bold text-blue-600`}>{newMembersThisMonth}</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                  <span className="text-sm font-medium">Active Members</span>
-                  <span className="text-lg font-bold">{activeMembers}</span>
+                <div className={`flex justify-between items-center ${isMobile ? 'p-2' : 'p-4'} bg-gray-50 rounded-lg`}>
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>Active Members</span>
+                  <span className={`${isMobile ? 'text-sm' : 'text-lg'} font-bold`}>{activeMembers}</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                  <span className="text-sm font-medium">Total Members</span>
-                  <span className="text-lg font-bold">{totalMembers}</span>
+                <div className={`flex justify-between items-center ${isMobile ? 'p-2' : 'p-4'} bg-gray-50 rounded-lg`}>
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>Total Members</span>
+                  <span className={`${isMobile ? 'text-sm' : 'text-lg'} font-bold`}>{totalMembers}</span>
                 </div>
               </CardContent>
             </Card>
@@ -478,46 +522,52 @@ const chartConfig = {
 
           {/* Financial Reports */}
           <Card>
-            <CardHeader>
-              <CardTitle>Payment Summary</CardTitle>
+            <CardHeader className={isMobile ? 'pb-2 px-3 pt-3' : ''}>
+              <CardTitle className={isMobile ? 'text-base' : ''}>Payment Summary</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className={isMobile ? 'px-3 pb-3' : ''}>
               {payments.length > 0 ? (
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="text-center p-4 bg-green-50 rounded-lg">
-                      <div className="text-2xl font-bold text-green-600">₹{currentMonthRevenue.toLocaleString()}</div>
-                      <div className="text-sm text-green-700">This Month</div>
+                <div className={`space-y-${isMobile ? '3' : '4'}`}>
+                  <div className={`grid ${isMobile ? 'grid-cols-1 gap-2' : 'grid-cols-1 md:grid-cols-3 gap-4'}`}>
+                    <div className={`text-center ${isMobile ? 'p-2' : 'p-4'} bg-green-50 rounded-lg`}>
+                      <div className={`${isMobile ? 'text-lg' : 'text-2xl'} font-bold text-green-600`}>₹{currentMonthRevenue.toLocaleString()}</div>
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-700`}>This Month</div>
                     </div>
-                    <div className="text-center p-4 bg-blue-50 rounded-lg">
-                      <div className="text-2xl font-bold text-blue-600">{currentMonthPayments.length}</div>
-                      <div className="text-sm text-blue-700">Payments This Month</div>
+                    <div className={`text-center ${isMobile ? 'p-2' : 'p-4'} bg-blue-50 rounded-lg`}>
+                      <div className={`${isMobile ? 'text-lg' : 'text-2xl'} font-bold text-blue-600`}>{currentMonthPayments.length}</div>
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-700`}>
+                        {isMobile ? 'Payments' : 'Payments This Month'}
+                      </div>
                     </div>
-                    <div className="text-center p-4 bg-purple-50 rounded-lg">
-                      <div className="text-2xl font-bold text-purple-600">
+                    <div className={`text-center ${isMobile ? 'p-2' : 'p-4'} bg-purple-50 rounded-lg`}>
+                      <div className={`${isMobile ? 'text-lg' : 'text-2xl'} font-bold text-purple-600`}>
                         ₹{currentMonthPayments.length > 0 ? Math.round(currentMonthRevenue / currentMonthPayments.length).toLocaleString() : 0}
                       </div>
-                      <div className="text-sm text-purple-700">Avg Payment</div>
+                      <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-700`}>
+                        {isMobile ? 'Avg' : 'Avg Payment'}
+                      </div>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div className="text-center py-8">
-                  <DollarSign className="w-12 h-12 mx-auto text-gray-400 mb-2" />
-                  <p className="text-gray-600">No payment data available</p>
-                  <p className="text-gray-500 text-sm">Start recording payments to see financial reports</p>
+                <div className={`text-center ${isMobile ? 'py-4' : 'py-8'}`}>
+                  <DollarSign className={`${isMobile ? 'w-8 h-8' : 'w-12 h-12'} mx-auto text-gray-400 mb-2`} />
+                  <p className={`text-gray-600 ${isMobile ? 'text-sm' : ''}`}>
+                    {isMobile ? 'No payment data' : 'No payment data available'}
+                  </p>
+                  {!isMobile && <p className="text-gray-500 text-sm">Start recording payments to see financial reports</p>}
                 </div>
               )}
             </CardContent>
           </Card>
         </TabsContent>
 
-        <TabsContent value="expired" className="space-y-6">
+        <TabsContent value="expired" className={`space-y-${isMobile ? '4' : '6'}`}>
           <ExpiredMembersReport />
         </TabsContent>
 
         {/* Analytics Tab */}
-        <TabsContent value="analytics" className="space-y-6">
+        <TabsContent value="analytics" className={`space-y-${isMobile ? '4' : '6'}`}>
           {/* Analytics Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <StatCard

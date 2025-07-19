@@ -175,7 +175,7 @@ const AddMemberDialog = ({ onAddMember }: AddMemberDialogProps) => {
                 ) : (
                   plans.map((plan) => (
                     <SelectItem key={plan.id} value={plan.name}>
-                      {plan.name} - {plan.price.toLocaleString()}/{plan.duration_months} month{plan.duration_months > 1 ? 's' : ''}
+                      {plan.name} - ₹{plan.price.toLocaleString()}/{plan.duration_months} month{plan.duration_months > 1 ? 's' : ''}
                     </SelectItem>
                   ))
                 )}
@@ -188,10 +188,10 @@ const AddMemberDialog = ({ onAddMember }: AddMemberDialogProps) => {
                   Duration: {plans.find(p => p.name === newMember.plan)?.duration_months} month{plans.find(p => p.name === newMember.plan)?.duration_months > 1 ? 's' : ''}
                 </div>
                 <div className="text-emerald-700">
-                  Total Cost: {plans.find(p => p.name === newMember.plan)?.price.toLocaleString()}
+                  Total Cost: ₹{plans.find(p => p.name === newMember.plan)?.price.toLocaleString()}
                 </div>
                 <div className="text-emerald-700">
-                  Per Month: {Math.round((plans.find(p => p.name === newMember.plan)?.price || 0) / (plans.find(p => p.name === newMember.plan)?.duration_months || 1)).toLocaleString()}
+                  Per Month: ₹{Math.round((plans.find(p => p.name === newMember.plan)?.price || 0) / (plans.find(p => p.name === newMember.plan)?.duration_months || 1)).toLocaleString()}
                 </div>
                 {plans.find(p => p.name === newMember.plan)?.description && (
                   <div className="text-emerald-700 mt-1">

@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { formatDate } from '@/utils/date';
-import { User, Calendar, Bell, Pencil, Trash, IndianRupee } from 'lucide-react';
+import { User, Calendar, Bell, Pencil, Trash, DollarSign } from 'lucide-react';
 import { Member } from '@/types/member';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
@@ -41,7 +41,7 @@ const MemberCard = ({ member, onShowQR }: MemberCardProps) => {
     setEditFields({ name: member.name, phone: member.phone, plan: member.plan });
   };
   const handleCollectPayment = async () => {
-    const amountStr = prompt('Enter payment amount (₹):');
+    const amountStr = prompt('Enter payment amount:');
     if (!amountStr) return;
     const amount = Number(amountStr);
     if (isNaN(amount) || amount <= 0) {
@@ -179,7 +179,7 @@ const MemberCard = ({ member, onShowQR }: MemberCardProps) => {
             disabled={isPaying}
             className={`border-green-500 text-green-600 hover:bg-green-50 ${isMobile ? 'h-7 px-2' : 'px-3'} flex-1`}
           >
-            <IndianRupee className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
+            <DollarSign className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
           </Button>
           <Button
             size="sm"
